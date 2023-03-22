@@ -1,5 +1,5 @@
 import { testingOnly, newBoard } from "./newBoard";
-import { Cell } from "./types";
+import { Cell, Status } from "./types";
 
 const {
 	getRandomIndex,
@@ -110,9 +110,8 @@ describe("Create board", () => {
 	});
 
 	it("generate correct board", () => {
-		const board = newBoard({ rows: 5, cols: 7, mines: 10 });
-		expect(board.opened).toHaveLength(0);
-		expect(board.matrix).toHaveLength(5);
-		expect(board.matrix[0]).toHaveLength(7);
+		const matrix = newBoard({ rows: 5, cols: 7, mines: 10 });
+		expect(matrix).toHaveLength(5);
+		expect(matrix[0]).toHaveLength(7);
 	});
 });

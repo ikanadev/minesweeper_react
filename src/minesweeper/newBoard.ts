@@ -1,24 +1,24 @@
 import { BoardSettings, Board, Cell, BoardCell } from "./types";
 
 export function newBoard(settings: BoardSettings): Board {
-	const board: Board = {
-		matrix: generateEmptyBoard(settings.rows, settings.cols),
-		opened: [],
-	};
+	const matrix: BoardCell[][] = generateEmptyBoard(
+		settings.rows,
+		settings.cols,
+	);
 	const minesCoords = generateMinesCoords(settings);
 	minesCoords.forEach(([row, col]) => {
-		board.matrix[row][col] = Cell.Mine;
+		matrix[row][col] = Cell.Mine;
 	});
-	board.matrix.forEach((row, rowIndex) => {
+	matrix.forEach((row, rowIndex) => {
 		row.forEach((cell, colIndex) => {
 			if (cell === Cell.Mine) return;
-			const minesCount = getCellMinesCount(rowIndex, colIndex, board.matrix);
+			const minesCount = getCellMinesCount(rowIndex, colIndex, matrix);
 			if (minesCount > 0) {
-				board.matrix[rowIndex][colIndex] = minesCount;
+				matrix[rowIndex][colIndex] = minesCount;
 			}
 		});
 	});
-	return board;
+	return matrix;
 }
 
 function getCellMinesCount(
