@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         heading: 'Alkatra',
+        sans: 'Noto Sans',
       }
     },
   },
