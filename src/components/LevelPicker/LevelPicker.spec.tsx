@@ -4,7 +4,6 @@ import {
 	render,
 	screen,
 } from "@testing-library/react";
-import { create } from "zustand";
 
 import { englishLabels } from "~/translations";
 import { BoardState, useBoardStore, useI18nStore } from "~/state";
@@ -92,13 +91,19 @@ describe("<Heading />", () => {
 			const customOpt = screen.getByText(i18n.level.custom);
 			fireEvent.click(customOpt);
 			expect(
-				await screen.findByLabelText(i18n.customLevel.rows),
+				await screen.findByLabelText(
+					new RegExp(`${i18n.customLevel.rows}`, "i"),
+				),
 			).toBeInTheDocument();
 			expect(
-				await screen.findByLabelText(i18n.customLevel.cols),
+				await screen.findByLabelText(
+					new RegExp(`${i18n.customLevel.cols}`, "i"),
+				),
 			).toBeInTheDocument();
 			expect(
-				await screen.findByLabelText(i18n.customLevel.mines),
+				await screen.findByLabelText(
+					new RegExp(`${i18n.customLevel.mines}`, "i"),
+				),
 			).toBeInTheDocument();
 			expect(
 				await screen.findByRole("button", { name: i18n.customLevelPlay }),
@@ -108,24 +113,39 @@ describe("<Heading />", () => {
 		it("generate custom board", async () => {
 			render(<LevelPicker />);
 			const boardOpts: BoardSettings = {
-				rows: 75,
-				cols: 80,
-				mines: 550,
+				rows: 20,
+				cols: 20,
+				mines: 100,
 			};
 
 			const { i18n } = useI18nStore.getState();
 			const customOpt = screen.getByText(i18n.level.custom);
 			fireEvent.click(customOpt);
 
-			fireEvent.change(await screen.findByLabelText(i18n.customLevel.rows), {
-				target: { value: boardOpts.rows },
-			});
-			fireEvent.change(await screen.findByLabelText(i18n.customLevel.cols), {
-				target: { value: boardOpts.cols },
-			});
-			fireEvent.change(await screen.findByLabelText(i18n.customLevel.mines), {
-				target: { value: boardOpts.mines },
-			});
+			fireEvent.change(
+				await screen.findByLabelText(
+					new RegExp(`${i18n.customLevel.rows}`, "i"),
+				),
+				{
+					target: { value: boardOpts.rows },
+				},
+			);
+			fireEvent.change(
+				await screen.findByLabelText(
+					new RegExp(`${i18n.customLevel.cols}`, "i"),
+				),
+				{
+					target: { value: boardOpts.cols },
+				},
+			);
+			fireEvent.change(
+				await screen.findByLabelText(
+					new RegExp(`${i18n.customLevel.mines}`, "i"),
+				),
+				{
+					target: { value: boardOpts.mines },
+				},
+			);
 			fireEvent.click(
 				await screen.findByRole("button", { name: i18n.customLevelPlay }),
 			);
