@@ -19,6 +19,6 @@ export const spanishLabels: I18nLabels = {
 		notNumber: "Ingresa números válidos",
 		invalidRowColRange: `Las filas y columnas deben estar entre ${BOARD_MIN_SIZE} y ${BOARD_MAX_SIZE}`,
 		invalidMinesRange: (max, min) =>
-			`El nro de minas debe estar entre ${min} y ${max}`,
+			`El nro de minas para este tablero debe estar entre ${min} y ${max}`,
 	},
 };

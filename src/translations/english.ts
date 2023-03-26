@@ -19,6 +19,6 @@ export const englishLabels: I18nLabels = {
 		notNumber: "Only numbers are allowed",
 		invalidRowColRange: `Rows and cols should be between ${BOARD_MIN_SIZE} and ${BOARD_MAX_SIZE}`,
 		invalidMinesRange: (max, min) =>
-			`Mines should be between ${min} and ${max}`,
+			`Mines for this board size should be between ${min} and ${max}`,
 	},
 };
