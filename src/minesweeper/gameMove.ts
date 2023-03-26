@@ -48,6 +48,9 @@ function handleOpenCell(move: GameMove, board: Board) {
 				if (i < 0 || j < 0) continue;
 				if (i >= board.length || j >= board[0]?.length) continue;
 				if (i === move.row && j === move.col) continue;
+				if (move.game.openedMap[`${i}-${j}`]) {
+					continue;
+				}
 				indexesToCheck.push([i, j]);
 			}
 		}
