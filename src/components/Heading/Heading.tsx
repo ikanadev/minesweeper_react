@@ -4,7 +4,7 @@ import { BiMoonStarsFill, MdiWhiteBalanceSunny, Mine } from "~/icons";
 const Heading = () => {
 	const { theme, toggleTheme } = useTheme();
 	return (
-		<header className="bg-neutral-100 dark:bg-neutral-800">
+		<header className="bg-neutral-100 dark:bg-neutral-900">
 			<div className="container px-6 py-4 mx-auto flex items-center">
 				<span className="mb-2 mr-2">
 					<Mine width="28px" height="28px" />
