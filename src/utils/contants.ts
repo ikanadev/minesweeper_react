@@ -12,8 +12,11 @@ export const MEDIUM_MODE: BoardSettings = {
 	mines: 40,
 };
 
-export const HARD_MODE: BoardSettings = {
+export const EXPERT_MODE: BoardSettings = {
 	rows: 16,
 	cols: 30,
 	mines: 99,
 };
+
+export const BOARD_MAX_SIZE = 60;
+export const BOARD_MIN_SIZE = 5;
