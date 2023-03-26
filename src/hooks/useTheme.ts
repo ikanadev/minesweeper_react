@@ -16,7 +16,6 @@ export const useTheme = () => {
 
 	useEffect(() => {
 		const bodyEl = document.documentElement;
-		if (!bodyEl) return;
 		if (theme === Theme.Dark) {
 			bodyEl.classList.add(theme);
 			localStorage.setItem(THEME_KEY, theme);
