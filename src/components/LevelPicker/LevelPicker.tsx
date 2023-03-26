@@ -65,7 +65,7 @@ const LevelPicker = () => {
 			return;
 		}
 		const boardCells = rowsNum * colsNum;
-		const minMines = Math.round(boardCells / 4);
+		const minMines = Math.round(boardCells / 10);
 		const maxMines = boardCells - 1;
 		if (minesNum < minMines || minesNum > maxMines) {
 			setErrMsg(i18n.customLevelErrors.invalidMinesRange(maxMines, minMines));
@@ -156,6 +156,7 @@ function isBoardSizeValid(rows: number, cols: number): boolean {
 		return false;
 	}
 	if (rows > BOARD_MAX_SIZE || cols > BOARD_MAX_SIZE) {
+		return false;
 	}
 	return true;
 }
