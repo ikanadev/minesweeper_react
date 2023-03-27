@@ -41,26 +41,46 @@ function handleOpenCell(move: GameMove, game: Game, board: Board) {
 		handleLose(game, board);
 		return;
 	}
-	game.openedMap[cellMapIndex] = true;
-	if (board[move.row][move.col] === Cell.Blank) {
-		let indexesToCheck: [number, number][] = [];
-		for (let i = move.row - 1; i <= move.row + 1; i++) {
-			for (let j = move.col - 1; j <= move.col + 1; j++) {
-				if (i < 0 || j < 0) continue;
-				if (i >= board.length || j >= board[0]?.length) continue;
-				if (i === move.row && j === move.col) continue;
-				if (game.openedMap[`${i}-${j}`]) {
-					continue;
-				}
-				indexesToCheck.push([i, j]);
-			}
-		}
-		indexesToCheck.forEach(([row, col]) => {
-			const newMove = { ...move, row, col };
-			handleOpenCell(newMove, game, board);
+	let nearByBlanks = getNearbyBlanks(move.row, move.col, game, board);
+	while (nearByBlanks.length > 0) {
+		const newBlanks: [number, number][] = [];
+		nearByBlanks.forEach(([row, col]) => {
+			newBlanks.push(...getNearbyBlanks(row, col, game, board));
 		});
+		nearByBlanks = newBlanks;
 	}
 	checkAndHandleGameWin(game, board);
+}
+
+function getNearbyBlanks(
+	row: number,
+	col: number,
+	game: Game,
+	board: Board,
+): [number, number][] {
+	openCell(game, row, col);
+	if (typeof board[row][col] === "number") {
+		return [];
+	}
+	const nearbyBlanks: [number, number][] = [];
+	for (let i = row - 1; i <= row + 1; i++) {
+		for (let j = col - 1; j <= col + 1; j++) {
+			if (
+				game.openedMap[`${i}-${j}`] ||
+				i < 0 ||
+				j < 0 ||
+				i >= board.length ||
+				j >= board[0]?.length ||
+				(i === row && j === col)
+			)
+				continue;
+			openCell(game, i, j);
+			if (board[i][j] === Cell.Blank) {
+				nearbyBlanks.push([i, j]);
+			}
+		}
+	}
+	return nearbyBlanks;
 }
 
 function handleLose(game: Game, board: Board) {
