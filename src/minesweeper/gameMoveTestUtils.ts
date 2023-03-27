@@ -1,7 +1,13 @@
-import { Click, Status, Game, CellMap, Board, Cell } from "./types";
+import { Click, Status, Game, CellMap, Board, Cell, GameMove } from "./types";
 
 const B = Cell.Blank;
 const M = Cell.Mine;
+type GameMoveTest = {
+	move: GameMove;
+	game: Game;
+	expected: Game;
+};
+
 export function dummyGame({
 	flagged,
 	opened,
@@ -29,6 +35,186 @@ export function dummyGame({
 	};
 }
 
+export const simpleGameBoard: Board = [
+	[B, 1, 1],
+	[B, 2, M],
+	[B, 2, M],
+];
+
+export const lostGameTests: GameMoveTest[] = [
+	{
+		move: { row: 0, col: 1, click: Click.Left },
+		game: dummyGame({
+			flagged: [],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 1, col: 2, click: Click.Left },
+		game: dummyGame({
+			flagged: [],
+			opened: ["0-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-1", "1-2", "2-2"],
+			status: Status.Lose,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 0, click: Click.Left },
+		game: dummyGame({
+			flagged: [],
+			opened: ["0-1", "1-2", "2-2"],
+			status: Status.Lose,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-1", "1-2", "2-2"],
+			status: Status.Lose,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 0, click: Click.Right },
+		game: dummyGame({
+			flagged: [],
+			opened: ["0-1", "1-2", "2-2"],
+			status: Status.Lose,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-1", "1-2", "2-2"],
+			status: Status.Lose,
+			mines: 2,
+		}),
+	},
+];
+
+export const wonGameTests: GameMoveTest[] = [
+	{
+		move: { row: 0, col: 0, click: Click.Left },
+		game: dummyGame({
+			flagged: [],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-0", "0-1", "1-0", "1-1", "2-0", "2-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 2, click: Click.Left },
+		game: dummyGame({
+			flagged: [],
+			opened: ["0-0", "0-1", "1-0", "1-1", "2-0", "2-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: ["1-2", "2-2"],
+			opened: ["0-0", "0-1", "1-0", "1-1", "2-0", "2-1", "0-2"],
+			status: Status.Win,
+			mines: 2,
+		}),
+	},
+];
+
+export const flagGameTests: GameMoveTest[] = [
+	{
+		move: { row: 0, col: 0, click: Click.Right },
+		game: dummyGame({
+			flagged: [],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: ["0-0"],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 0, click: Click.Left },
+		game: dummyGame({
+			flagged: ["0-0"],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: ["0-0"],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 0, click: Click.Right },
+		game: dummyGame({
+			flagged: ["0-0"],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 1, click: Click.Left },
+		game: dummyGame({
+			flagged: [],
+			opened: [],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+	{
+		move: { row: 0, col: 1, click: Click.Right },
+		game: dummyGame({
+			flagged: [],
+			opened: ["0-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+		expected: dummyGame({
+			flagged: [],
+			opened: ["0-1"],
+			status: Status.Started,
+			mines: 2,
+		}),
+	},
+];
+
 export const completeGameplayBoard: Board = [
 	[B, B, 1, 1, 1],
 	[1, 2, 4, M, 2],
@@ -36,11 +222,9 @@ export const completeGameplayBoard: Board = [
 	[2, 3, 3, 2, 1],
 	[M, 1, B, B, B],
 ];
-export const completeGameplayTests = [
+export const completeGameplayTests: GameMoveTest[] = [
 	{
-		row: 0,
-		col: 1,
-		click: Click.Left,
+		move: { row: 0, col: 1, click: Click.Left },
 		game: dummyGame({
 			flagged: [],
 			opened: [],
@@ -55,9 +239,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 2,
-		col: 4,
-		click: Click.Left,
+		move: { row: 2, col: 4, click: Click.Left },
 		game: dummyGame({
 			flagged: [],
 			opened: ["0-0", "0-1", "0-2", "1-0", "1-1", "1-2"],
@@ -72,9 +254,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 4,
-		col: 4,
-		click: Click.Left,
+		move: { row: 4, col: 4, click: Click.Left },
 		game: dummyGame({
 			flagged: [],
 			opened: ["0-0", "0-1", "0-2", "1-0", "1-1", "1-2", "2-4"],
@@ -105,9 +285,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 2,
-		col: 3,
-		click: Click.Right,
+		move: { row: 2, col: 3, click: Click.Right },
 		game: dummyGame({
 			flagged: [],
 			opened: [
@@ -154,9 +332,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 2,
-		col: 0,
-		click: Click.Left,
+		move: { row: 2, col: 0, click: Click.Left },
 		game: dummyGame({
 			flagged: ["2-3"],
 			opened: [
@@ -204,9 +380,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 3,
-		col: 0,
-		click: Click.Left,
+		move: { row: 3, col: 0, click: Click.Left },
 		game: dummyGame({
 			flagged: ["2-3"],
 			opened: [
@@ -256,9 +430,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 4,
-		col: 0,
-		click: Click.Right,
+		move: { row: 4, col: 0, click: Click.Right },
 		game: dummyGame({
 			flagged: ["2-3"],
 			opened: [
@@ -309,9 +481,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 0,
-		col: 4,
-		click: Click.Left,
+		move: { row: 0, col: 4, click: Click.Left },
 		game: dummyGame({
 			flagged: ["2-3", "4-0"],
 			opened: [
@@ -363,9 +533,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 1,
-		col: 4,
-		click: Click.Left,
+		move: { row: 1, col: 4, click: Click.Left },
 		game: dummyGame({
 			flagged: ["2-3", "4-0"],
 			opened: [
@@ -419,9 +587,7 @@ export const completeGameplayTests = [
 		}),
 	},
 	{
-		row: 0,
-		col: 3,
-		click: Click.Left,
+		move: { row: 0, col: 3, click: Click.Left },
 		game: dummyGame({
 			flagged: ["2-3", "4-0"],
 			opened: [
@@ -449,7 +615,7 @@ export const completeGameplayTests = [
 			mines: 5,
 		}),
 		expected: dummyGame({
-			flagged: ["2-3", "4-0"],
+			flagged: ["2-3", "4-0", "1-3", "2-1", "2-2"],
 			opened: [
 				"0-0",
 				"0-1",

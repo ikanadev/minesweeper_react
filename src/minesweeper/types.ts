@@ -7,7 +7,6 @@ export type Game = {
 export type GameMove = {
 	row: number;
 	col: number;
-	game: Game;
 	click: Click;
 };
 

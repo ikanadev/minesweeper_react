@@ -8,39 +8,40 @@ import {
 	Cell,
 } from "./types";
 
-export function gameMove(move: GameMove, board: Board) {
+export function gameMove(move: GameMove, game: Game, board: Board) {
+	if (game.status === Status.Lose) return;
 	if (move.click === Click.Right) {
-		handleFlagCell(move);
+		handleFlagCell(move, game);
 		return;
 	}
-	handleOpenCell(move, board);
+	handleOpenCell(move, game, board);
 }
 
-function handleFlagCell(move: GameMove) {
+function handleFlagCell(move: GameMove, game: Game) {
 	const cellMapIndex: CellMapIndex = `${move.row}-${move.col}`;
 	// if cell is opened, we can not flag it
-	if (move.game.openedMap[cellMapIndex]) {
-		move.game;
+	if (game.openedMap[cellMapIndex]) {
 		return;
 	}
-	if (move.game.flaggedMap[cellMapIndex]) {
+	if (game.flaggedMap[cellMapIndex]) {
 		// rome-ignore lint/performance/noDelete: <explanation>
-		delete move.game.flaggedMap[cellMapIndex];
+		delete game.flaggedMap[cellMapIndex];
 	} else {
-		move.game.flaggedMap[cellMapIndex] = true;
+		game.flaggedMap[cellMapIndex] = true;
 	}
 }
 
-function handleOpenCell(move: GameMove, board: Board) {
+function handleOpenCell(move: GameMove, game: Game, board: Board) {
 	const cellMapIndex: CellMapIndex = `${move.row}-${move.col}`;
-	if (move.game.openedMap[cellMapIndex]) {
+	// if opened or flagged, do nothing
+	if (game.openedMap[cellMapIndex] || game.flaggedMap[cellMapIndex]) {
 		return;
 	}
-	move.game.openedMap[cellMapIndex] = true;
 	if (board[move.row][move.col] === Cell.Mine) {
-		move.game.status = Status.Lose;
+		handleLose(game, board);
 		return;
 	}
+	game.openedMap[cellMapIndex] = true;
 	if (board[move.row][move.col] === Cell.Blank) {
 		let indexesToCheck: [number, number][] = [];
 		for (let i = move.row - 1; i <= move.row + 1; i++) {
@@ -48,7 +49,7 @@ function handleOpenCell(move: GameMove, board: Board) {
 				if (i < 0 || j < 0) continue;
 				if (i >= board.length || j >= board[0]?.length) continue;
 				if (i === move.row && j === move.col) continue;
-				if (move.game.openedMap[`${i}-${j}`]) {
+				if (game.openedMap[`${i}-${j}`]) {
 					continue;
 				}
 				indexesToCheck.push([i, j]);
@@ -56,16 +57,45 @@ function handleOpenCell(move: GameMove, board: Board) {
 		}
 		indexesToCheck.forEach(([row, col]) => {
 			const newMove = { ...move, row, col };
-			handleOpenCell(newMove, board);
+			handleOpenCell(newMove, game, board);
 		});
 	}
-	checkGameWin(move.game, board);
+	checkAndHandleGameWin(game, board);
 }
 
-function checkGameWin(game: Game, board: Board) {
-	const remainingCells =
-		board.length * board[0]?.length - Object.keys(game.openedMap).length;
-	if (game.minesCount === remainingCells) {
-		game.status = Status.Win;
-	}
+function handleLose(game: Game, board: Board) {
+	game.status = Status.Lose;
+	const toOpen: [number, number][] = [];
+	board.forEach((row, rowIdx) => {
+		row.forEach((cell, colIdx) => {
+			if (cell === Cell.Mine && !game.openedMap[`${rowIdx}-${colIdx}`]) {
+				toOpen.push([rowIdx, colIdx]);
+			}
+		});
+	});
+	toOpen.forEach(([row, col]) => {
+		openCell(game, row, col);
+	});
+}
+
+function openCell(game: Game, row: number, col: number) {
+	game.openedMap[`${row}-${col}`] = true;
+}
+
+function checkAndHandleGameWin(game: Game, board: Board) {
+	const totalCells = board.length * board[0]?.length;
+	const remainingCells = totalCells - Object.keys(game.openedMap).length;
+	if (game.minesCount !== remainingCells) return;
+	game.status = Status.Win;
+	const toFlag: [number, number][] = [];
+	board.forEach((row, rowIdx) => {
+		row.forEach((cell, colIdx) => {
+			if (cell === Cell.Mine && !game.flaggedMap[`${rowIdx}-${colIdx}`]) {
+				toFlag.push([rowIdx, colIdx]);
+			}
+		});
+	});
+	toFlag.forEach(([row, col]) => {
+		game.flaggedMap[`${row}-${col}`] = true;
+	});
 }
