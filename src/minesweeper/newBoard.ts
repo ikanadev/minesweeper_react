@@ -27,20 +27,21 @@ function getCellMinesCount(
 	matrix: BoardCell[][],
 ): number {
 	let minesCount = 0;
-	let coords: [number, number][] = [];
 	for (let row = rowIndex - 1; row <= rowIndex + 1; row++) {
 		for (let col = colIndex - 1; col <= colIndex + 1; col++) {
-			if (row < 0 || col < 0) continue;
-			if (row >= matrix.length || row >= matrix[0]?.length) continue;
-			if (row === rowIndex && col === colIndex) continue;
-			coords.push([row, col]);
+			if (
+				row < 0 ||
+				col < 0 ||
+				row >= matrix.length ||
+				col >= matrix[0]?.length ||
+				(row === rowIndex && col === colIndex)
+			)
+				continue;
+			if (matrix[row][col] === Cell.Mine) {
+				minesCount++;
+			}
 		}
 	}
-	coords.forEach(([row, col]) => {
-		if (matrix[row][col] === Cell.Mine) {
-			minesCount++;
-		}
-	});
 	return minesCount;
 }
 
