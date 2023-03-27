@@ -80,13 +80,13 @@ const LevelPicker = () => {
 
 	return (
 		<div className="bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50">
-			<div className="container px-6 mx-auto pb-6">
+			<div className="container px-2 mx-auto pb-6">
 				<div>
 					<RadioGroup value={gameLevel} onChange={setGameLevel}>
 						<RadioGroup.Label className="text-lg font-semibold">
 							{i18n.levelLabel}
 						</RadioGroup.Label>
-						<div className="flex gap-1 mt-1">
+						<div className="flex gap-1 mt-1 flex-wrap">
 							{gameLevelOpts.map((opt) => (
 								<RadioGroup.Option
 									value={opt.value}
@@ -111,7 +111,7 @@ const LevelPicker = () => {
 				</div>
 				{gameLevel === GameLevel.Custom && (
 					<>
-						<div className="mt-4 flex gap-4 text-neutral-900 dark:text-neutral-100">
+						<div className="mt-4 flex flex-wrap gap-4 text-neutral-900 dark:text-neutral-100">
 							<Input
 								label={i18n.customLevel.rows}
 								value={rows}
