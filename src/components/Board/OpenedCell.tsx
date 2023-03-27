@@ -19,13 +19,13 @@ type Props = {
 const OpenedCell: FC<Props> = ({ cell }) => {
 	return (
 		<div
-			className={`w-10 h-10 rounded-sm p-1 text-center text-2xl font-semibold overflow-hidden ${
+			className={`w-8 h-8 rounded-sm p-1 text-xl font-semibold flex justify-center items-center overflow-hidden ${
 				cell === Cell.Mine
-					? "bg-red-200 dark:bg-neutral-700"
-					: "bg-neutral-200 dark:bg-neutral-700"
+					? "bg-red-200 dark:bg-neutral-800"
+					: "bg-gray-200 dark:bg-neutral-800"
 			} ${typeof cell === "number" && colorMap[cell]}`}
 		>
-			{cell === Cell.Mine && <Mine className="w-8 h-8" />}
+			{cell === Cell.Mine && <Mine className="w-6 h-6" />}
 			{typeof cell === "number" && cell}
 		</div>
 	);
