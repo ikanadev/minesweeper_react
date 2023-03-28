@@ -6,7 +6,7 @@ describe("game creation", () => {
 		const game = newGame(8);
 		expect(game.flaggedMap).toEqual({});
 		expect(game.openedMap).toEqual({});
-		expect(game.status).toStrictEqual(Status.Started);
+		expect(game.status).toStrictEqual(Status.Ready);
 		expect(game.minesCount).toStrictEqual(8);
 	});
 });

@@ -35,4 +35,5 @@ export enum Status {
 	Win,
 	Lose,
 	Started,
+	Ready,
 }

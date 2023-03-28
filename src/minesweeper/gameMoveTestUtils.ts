@@ -47,7 +47,7 @@ export const lostGameTests: GameMoveTest[] = [
 		game: dummyGame({
 			flagged: [],
 			opened: [],
-			status: Status.Started,
+			status: Status.Ready,
 			mines: 2,
 		}),
 		expected: dummyGame({
@@ -110,7 +110,7 @@ export const wonGameTests: GameMoveTest[] = [
 		game: dummyGame({
 			flagged: [],
 			opened: [],
-			status: Status.Started,
+			status: Status.Ready,
 			mines: 2,
 		}),
 		expected: dummyGame({
@@ -143,7 +143,7 @@ export const flagGameTests: GameMoveTest[] = [
 		game: dummyGame({
 			flagged: [],
 			opened: [],
-			status: Status.Started,
+			status: Status.Ready,
 			mines: 2,
 		}),
 		expected: dummyGame({
@@ -228,7 +228,7 @@ export const completeGameplayTests: GameMoveTest[] = [
 		game: dummyGame({
 			flagged: [],
 			opened: [],
-			status: Status.Started,
+			status: Status.Ready,
 			mines: 5,
 		}),
 		expected: dummyGame({

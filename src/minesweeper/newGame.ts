@@ -4,7 +4,7 @@ export function newGame(minesCount: number): Game {
 	return {
 		openedMap: {},
 		flaggedMap: {},
-		status: Status.Started,
+		status: Status.Ready,
 		minesCount,
 	};
 }
