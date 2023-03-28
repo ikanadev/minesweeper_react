@@ -5,8 +5,8 @@ import { Status } from "~/minesweeper/types";
 import { useGameStore } from "~/state";
 
 const Counter = () => {
-	const [start, setStart] = useState(window.performance.now());
-	const [end, setEnd] = useState(window.performance.now());
+	const [start, setStart] = useState(0);
+	const [end, setEnd] = useState(0);
 	const { game } = useGameStore();
 
 	const intervalRef = useRef<NodeJS.Timer>();
