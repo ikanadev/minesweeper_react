@@ -1,6 +1,6 @@
-import { SVGProps } from "react";
+import { SVGProps, memo } from "react";
 
-export function Timer(props: SVGProps<SVGSVGElement>) {
+const Timer = memo((props: SVGProps<SVGSVGElement>) => {
 	console.log("rendering icon");
 	return (
 		<svg
@@ -50,4 +50,6 @@ export function Timer(props: SVGProps<SVGSVGElement>) {
 			/>
 		</svg>
 	);
-}
+});
+
+export default Timer;

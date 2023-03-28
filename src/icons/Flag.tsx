@@ -1,6 +1,6 @@
-import { SVGProps } from "react";
+import { memo, SVGProps } from "react";
 
-export function Flag(props: SVGProps<SVGSVGElement>) {
+const Flag = memo((props: SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
 			version="1.1"
@@ -55,4 +55,6 @@ export function Flag(props: SVGProps<SVGSVGElement>) {
 			</g>
 		</svg>
 	);
-}
+});
+
+export default Flag;

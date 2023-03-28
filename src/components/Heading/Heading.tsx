@@ -1,5 +1,5 @@
 import { Theme, useTheme } from "~/hooks";
-import { BiMoonStarsFill, MdiWhiteBalanceSunny, Mine } from "~/icons";
+import { Moon, Sun, Mine } from "~/icons";
 
 const Heading = () => {
 	const { theme, toggleTheme } = useTheme();
@@ -21,9 +21,9 @@ const Heading = () => {
 					}`}
 				>
 					{theme === Theme.Dark ? (
-						<BiMoonStarsFill width="24px" height="24px" />
+						<Moon width="24px" height="24px" />
 					) : (
-						<MdiWhiteBalanceSunny width="24px" height="24px" />
+						<Sun width="24px" height="24px" />
 					)}
 				</button>
 			</div>

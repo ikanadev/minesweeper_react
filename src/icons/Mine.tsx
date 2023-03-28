@@ -1,6 +1,6 @@
-import { SVGProps } from "react";
+import { memo, SVGProps } from "react";
 
-export function Mine(props: SVGProps<SVGSVGElement>) {
+const Mine = memo((props: SVGProps<SVGSVGElement>) => {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -91,4 +91,6 @@ export function Mine(props: SVGProps<SVGSVGElement>) {
 			</g>
 		</svg>
 	);
-}
+});
+
+export default Mine;
