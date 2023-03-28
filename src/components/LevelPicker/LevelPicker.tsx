@@ -80,7 +80,7 @@ const LevelPicker = () => {
 
 	return (
 		<div className="bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50">
-			<div className="container px-2 mx-auto pb-6">
+			<div className="container px-2 mx-auto pb-2">
 				<div>
 					<RadioGroup value={gameLevel} onChange={setGameLevel}>
 						<RadioGroup.Label className="text-lg font-semibold">
