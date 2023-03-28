@@ -95,7 +95,7 @@ const LevelPicker = () => {
 								>
 									{({ checked }) => (
 										<span
-											className={`px-3 py-1.5 font-semibold rounded-md inline-block ${
+											className={`px-3 py-1 font-semibold rounded-md inline-block ${
 												checked
 													? "bg-neutral-800 dark:bg-neutral-100 text-white dark:text-black shadow-md "
 													: "bg-neutral-200 dark:bg-neutral-800 cursor-pointer"
@@ -131,7 +131,7 @@ const LevelPicker = () => {
 								type="button"
 								name={i18n.customLevelPlay}
 								onClick={handlePlayCustomGame}
-								className="px-3 py-1.5 font-semibold rounded-md bg-neutral-800 dark:bg-neutral-100 text-white dark:text-black shadow-md"
+								className="px-3 py-1 font-semibold rounded-md bg-neutral-800 dark:bg-neutral-100 text-white dark:text-black shadow-md"
 							>
 								{i18n.customLevelPlay}
 							</button>

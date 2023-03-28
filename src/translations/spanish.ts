@@ -21,4 +21,11 @@ export const spanishLabels: I18nLabels = {
 		invalidMinesRange: (max, min) =>
 			`El nro de minas para este tablero debe estar entre ${min} y ${max}`,
 	},
+	gameStatus: {
+		ready: "Inicia cuando quieras",
+		started: "🫡 Buena suerte",
+		win: "🥳 ¡Bien hecho! 🎉",
+		lose: "😥 ¡Oh no!",
+	},
+	restartGame: "Iniciar de nuevo",
 };

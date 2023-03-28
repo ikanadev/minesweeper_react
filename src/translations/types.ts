@@ -22,4 +22,11 @@ export type I18nLabels = {
 		invalidRowColRange: string;
 		invalidMinesRange: (max: number, min: number) => string;
 	};
+	gameStatus: {
+		ready: string;
+		started: string;
+		win: string;
+		lose: string;
+	};
+	restartGame: string;
 };

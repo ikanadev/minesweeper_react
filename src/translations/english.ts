@@ -21,4 +21,11 @@ export const englishLabels: I18nLabels = {
 		invalidMinesRange: (max, min) =>
 			`Mines for this board size should be between ${min} and ${max}`,
 	},
+	gameStatus: {
+		ready: "Start whenever you want",
+		started: "🫡 Good luck",
+		win: "🥳 Well done! 🎉",
+		lose: "😥 Oh no!",
+	},
+	restartGame: "Start again",
 };
