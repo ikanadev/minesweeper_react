@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import { Mine } from "~/icons";
 import { BoardCell, Cell } from "~/minesweeper/types";
 
@@ -16,7 +16,7 @@ const colorMap: { [key: number]: string } = {
 type Props = {
 	cell: BoardCell;
 };
-const OpenedCell: FC<Props> = ({ cell }) => {
+const OpenedCell: FC<Props> = memo(({ cell }) => {
 	return (
 		<div
 			className={`w-8 h-8 rounded-sm p-1 text-xl font-semibold flex justify-center items-center overflow-hidden ${
@@ -29,6 +29,6 @@ const OpenedCell: FC<Props> = ({ cell }) => {
 			{typeof cell === "number" && cell}
 		</div>
 	);
-};
+});
 
 export default OpenedCell;

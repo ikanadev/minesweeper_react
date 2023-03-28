@@ -33,7 +33,7 @@ const Board = () => {
 		);
 	};
 	return (
-		<main className="bg-neutral-100 dark:bg-neutral-900">
+		<main className="bg-neutral-100 dark:bg-neutral-900 pb-4">
 			<div className="container px-2 mx-auto">
 				<div className="w-full overflow-auto flex flex-col gap-0.5">
 					{board.map((row, i) => (
