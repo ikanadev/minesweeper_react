@@ -1,4 +1,4 @@
-import { Heading, LevelPicker, Board, GameStatus } from "~/components";
+import { Heading, LevelPicker, Board, GameStatus, Records } from "~/components";
 
 function App() {
 	return (
@@ -7,6 +7,7 @@ function App() {
 			<LevelPicker />
 			<GameStatus />
 			<Board />
+			<Records />
 		</>
 	);
 }
