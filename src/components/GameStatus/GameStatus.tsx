@@ -24,9 +24,9 @@ const GameStatus = () => {
 	};
 
 	return (
-		<main className="bg-neutral-100 dark:bg-neutral-900 pb-1">
+		<main className="pb-1">
 			<div className="container px-2 mx-auto text-neutral-800 dark:text-neutral-100">
-				<h2 className="text-center font-heading text-xl">
+				<h2 className="text-center font-heading text-2xl">
 					{gameStatusMap[game.status]}
 				</h2>
 				<div className="flex items-end text-lg font-semibold">
