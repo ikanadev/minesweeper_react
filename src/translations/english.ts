@@ -30,4 +30,12 @@ export const englishLabels: I18nLabels = {
 	restartGame: "Start again",
 	noRecords: "No records yet.",
 	bestRecords: "Best records",
+	recordModal: {
+		title: "😮 What an amazing time! 🎉",
+		description:
+			"You're in the top 10 of best times, How would you like to be shown in the list?",
+		placeholder: "I am...",
+		saveButton: "Save my record",
+		cancelButton: "No, thanks",
+	},
 };

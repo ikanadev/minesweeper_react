@@ -1,6 +1,6 @@
 export enum Language {
-	Spanish,
-	English,
+	Spanish = "spanish",
+	English = "english",
 }
 
 export type I18nLabels = {
@@ -31,4 +31,11 @@ export type I18nLabels = {
 	restartGame: string;
 	noRecords: string;
 	bestRecords: string;
+	recordModal: {
+		title: string;
+		description: string;
+		placeholder: string;
+		saveButton: string;
+		cancelButton: string;
+	};
 };

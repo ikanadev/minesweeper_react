@@ -30,4 +30,12 @@ export const spanishLabels: I18nLabels = {
 	restartGame: "Iniciar de nuevo",
 	noRecords: "Aún no hay records.",
 	bestRecords: "Mejores récords",
+	recordModal: {
+		title: "😮 ¡Impresionante! 🎉",
+		description:
+			"Estas en el top 10 de mejores tiempos, ¿cómo te gustaría aparecer en la lista?",
+		placeholder: "Soy...",
+		saveButton: "Registar mi tiempo",
+		cancelButton: "No gracias",
+	},
 };
