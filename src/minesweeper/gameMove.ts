@@ -12,7 +12,7 @@ export function gameMove(move: GameMove, game: Game, board: Board) {
 	if (game.status === Status.Ready) {
 		game.status = Status.Started;
 	}
-	if (game.status === Status.Lose) return;
+	if (game.status === Status.Lose || game.status === Status.Win) return;
 	if (move.click === Click.Right) {
 		handleFlagCell(move, game);
 		return;
@@ -27,7 +27,6 @@ function handleFlagCell(move: GameMove, game: Game) {
 		return;
 	}
 	if (game.flaggedMap[cellMapIndex]) {
-		// rome-ignore lint/performance/noDelete: <explanation>
 		delete game.flaggedMap[cellMapIndex];
 	} else {
 		if (Object.keys(game.flaggedMap).length >= game.minesCount) return;
