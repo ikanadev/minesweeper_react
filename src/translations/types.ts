@@ -29,4 +29,6 @@ export type I18nLabels = {
 		lose: string;
 	};
 	restartGame: string;
+	noRecords: string;
+	bestRecords: string;
 };

@@ -28,4 +28,6 @@ export const spanishLabels: I18nLabels = {
 		lose: "😥 ¡Oh no!",
 	},
 	restartGame: "Iniciar de nuevo",
+	noRecords: "Aún no hay records.",
+	bestRecords: "Mejores récords",
 };
