@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { RadioGroup } from "@headlessui/react";
 
+import { GameLevel } from "~/types";
 import { BoardSettings } from "~/minesweeper/types";
 import { useBoardStore, useI18nStore } from "~/state";
 import {
@@ -11,13 +12,6 @@ import {
 	BOARD_MIN_SIZE,
 } from "~/utils/contants";
 import Input from "./Input";
-
-export enum GameLevel {
-	Easy,
-	Medium,
-	Expert,
-	Custom,
-}
 
 const LevelPicker = () => {
 	const [rows, setRows] = useState("5");
@@ -79,7 +73,7 @@ const LevelPicker = () => {
 	};
 
 	return (
-		<div className="bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50">
+		<div className="text-neutral-900 dark:text-neutral-50">
 			<div className="container px-2 mx-auto pb-2">
 				<div>
 					<RadioGroup value={gameLevel} onChange={setGameLevel}>
