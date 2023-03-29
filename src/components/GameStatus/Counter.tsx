@@ -2,12 +2,13 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 import { Timer } from "~/icons";
 import { Status } from "~/minesweeper/types";
-import { useGameStore } from "~/state";
+import { useGameStore, gameActions } from "~/state";
+import { milliToSecs } from "~/utils/functions";
 
 const Counter = () => {
 	const [start, setStart] = useState(0);
 	const [end, setEnd] = useState(0);
-	const { game, setDuration, setStartedAt } = useGameStore();
+	const game = useGameStore((s) => s.game);
 
 	const intervalRef = useRef<NodeJS.Timer>();
 	const elapsed = end - start;
@@ -30,7 +31,7 @@ const Counter = () => {
 			setEnd(0);
 		}
 		if (game.status === Status.Started) {
-			setStartedAt(Date.now());
+			gameActions.setStartedAt(Date.now());
 			setStart(window.performance.now());
 			setEnd(window.performance.now());
 			intervalRef.current = setInterval(() => {
@@ -41,14 +42,15 @@ const Counter = () => {
 
 	useEffect(() => {
 		if (game.status === Status.Win || game.status === Status.Lose) {
-			setDuration(elapsed);
+			console.log({ elapsed });
+			gameActions.setDuration(elapsed);
 		}
 	}, [elapsed, game.status]);
 
 	return (
 		<p>
 			<Timer className="w-6 h-6 inline-block mr-1 mb-1" />
-			{Math.round(elapsed / 1000)}.{Math.round((elapsed % 1000) / 100)}
+			{milliToSecs(elapsed, 1)}
 		</p>
 	);
 };

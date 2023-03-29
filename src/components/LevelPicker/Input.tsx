@@ -16,7 +16,7 @@ const Input: FC<Props> = ({ label, value, setterFn }) => {
 				value={value}
 				onChange={handleChange}
 				type="number"
-				className="ml-2 text-lg w-20 px-2 bg-white dark:bg-black dark:border dark:border-neutral-600 rounded-md"
+				className="ml-1 text-lg w-16 px-1.5 bg-white dark:bg-black dark:border dark:border-neutral-600 rounded-md"
 			/>
 		</label>
 	);

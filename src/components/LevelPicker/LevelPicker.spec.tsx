@@ -150,7 +150,7 @@ describe("<Heading />", () => {
 				await screen.findByRole("button", { name: i18n.customLevelPlay }),
 			);
 
-			let board = useBoardStore.getState().board;
+			const board = useBoardStore.getState().board;
 			expect(board).toHaveLength(boardOpts.rows);
 			expect(board[0]).toHaveLength(boardOpts.cols);
 		});

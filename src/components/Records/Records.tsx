@@ -1,19 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Status } from "~/minesweeper/types";
 import {
 	useBoardStore,
 	useGameStore,
 	useRecordsStore,
 	useI18nStore,
+	recordsActions,
 } from "~/state";
 import { GameLevel } from "~/types";
+import { RECORDS_MAX_ITEMS } from "~/utils/contants";
 import RecordItem from "./RecordItem";
+import NewRecordModal from "./NewRecordModal";
 
 const Record = () => {
-	const { board } = useBoardStore();
-	const { game, startedAt, duration } = useGameStore();
-	const { recordsMap, loadRecords } = useRecordsStore();
-	const { i18n } = useI18nStore();
+	const [showModal, setShowModal] = useState(false);
+	const board = useBoardStore((s) => s.board);
+	const { game, duration, gameLevel } = useGameStore();
+	const recordsMap = useRecordsStore((s) => s.recordsMap);
+	const i18n = useI18nStore((s) => s.i18n);
+
+	const toggleModal = () => setShowModal((prev) => !prev);
 
 	const levelMap = {
 		[GameLevel.Easy]: i18n.level.easy,
@@ -21,18 +27,28 @@ const Record = () => {
 		[GameLevel.Expert]: i18n.level.expert,
 	};
 
+	const isNewRecord = () => {
+		if (gameLevel === GameLevel.Custom) return false;
+		const records = recordsMap[gameLevel];
+		if (recordsMap[gameLevel].length < RECORDS_MAX_ITEMS) {
+			return true;
+		}
+		return records.some((record) => duration < record.duration);
+	};
+
 	useEffect(() => {
 		if (game.status === Status.Win) {
-			console.log(game, board, startedAt, duration);
+			setShowModal(isNewRecord());
 		}
 	}, [game, board]);
 
 	useEffect(() => {
-		loadRecords();
+		recordsActions.loadRecords();
 	}, []);
 
 	return (
 		<section className="pb-4 text-neutral-800 dark:text-neutral-100">
+			<NewRecordModal open={showModal} onClose={toggleModal} />
 			<div className="container px-2 py-3 mx-auto">
 				<h2 className="text-2xl font-heading mb-2">{i18n.bestRecords}</h2>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-8 gap-y-4">

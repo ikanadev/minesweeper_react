@@ -2,15 +2,8 @@ import { useEffect, useState, useMemo } from "react";
 import { RadioGroup } from "@headlessui/react";
 
 import { GameLevel } from "~/types";
-import { BoardSettings } from "~/minesweeper/types";
-import { useBoardStore, useI18nStore } from "~/state";
-import {
-	EASY_MODE,
-	MEDIUM_MODE,
-	EXPERT_MODE,
-	BOARD_MAX_SIZE,
-	BOARD_MIN_SIZE,
-} from "~/utils/contants";
+import { useI18nStore, useGameStore, gameActions } from "~/state";
+import { BOARD_MAX_SIZE, BOARD_MIN_SIZE } from "~/utils/contants";
 import Input from "./Input";
 
 const LevelPicker = () => {
@@ -18,10 +11,9 @@ const LevelPicker = () => {
 	const [cols, setCols] = useState("5");
 	const [mines, setMines] = useState("10");
 	const [errMsg, setErrMsg] = useState("");
-	const [gameLevel, setGameLevel] = useState(GameLevel.Easy);
 
-	const { i18n } = useI18nStore();
-	const { newBoard } = useBoardStore();
+	const gameLevel = useGameStore((s) => s.gameLevel);
+	const i18n = useI18nStore((s) => s.i18n);
 
 	const gameLevelOpts = useMemo(
 		() => [
@@ -32,12 +24,6 @@ const LevelPicker = () => {
 		],
 		[i18n],
 	);
-
-	useEffect(() => {
-		if (gameLevel !== GameLevel.Custom) {
-			newBoard(getBoardSettings(gameLevel));
-		}
-	}, [gameLevel]);
 
 	// clear error message when editing
 	useEffect(() => {
@@ -65,7 +51,7 @@ const LevelPicker = () => {
 			setErrMsg(i18n.customLevelErrors.invalidMinesRange(maxMines, minMines));
 			return;
 		}
-		newBoard({
+		gameActions.newCustomGame({
 			rows: parseInt(rows),
 			cols: parseInt(cols),
 			mines: parseInt(mines),
@@ -74,13 +60,13 @@ const LevelPicker = () => {
 
 	return (
 		<div className="text-neutral-900 dark:text-neutral-50">
-			<div className="container px-2 mx-auto pb-2">
+			<div className="max-w-lg px-2 mx-auto pb-4">
 				<div>
-					<RadioGroup value={gameLevel} onChange={setGameLevel}>
+					<RadioGroup value={gameLevel} onChange={gameActions.newGame}>
 						<RadioGroup.Label className="text-lg font-semibold">
 							{i18n.levelLabel}
 						</RadioGroup.Label>
-						<div className="flex gap-1 mt-1 flex-wrap">
+						<div className="flex justify-center gap-1 mt-1 flex-wrap">
 							{gameLevelOpts.map((opt) => (
 								<RadioGroup.Option
 									value={opt.value}
@@ -105,7 +91,7 @@ const LevelPicker = () => {
 				</div>
 				{gameLevel === GameLevel.Custom && (
 					<>
-						<div className="mt-4 flex flex-wrap gap-4 text-neutral-900 dark:text-neutral-100">
+						<div className="mt-4 flex flex-wrap items-center gap-3 text-neutral-900 dark:text-neutral-100">
 							<Input
 								label={i18n.customLevel.rows}
 								value={rows}
@@ -140,11 +126,6 @@ const LevelPicker = () => {
 	);
 };
 
-function getBoardSettings(level: GameLevel): BoardSettings {
-	if (level === GameLevel.Easy) return EASY_MODE;
-	if (level === GameLevel.Medium) return MEDIUM_MODE;
-	return EXPERT_MODE;
-}
 function isBoardSizeValid(rows: number, cols: number): boolean {
 	if (rows < BOARD_MIN_SIZE || cols < BOARD_MIN_SIZE) {
 		return false;

@@ -2,19 +2,19 @@ import ClosedCell from "./ClosedCell";
 import OpenedCell from "./OpenedCell";
 
 import { Click } from "~/minesweeper/types";
-import { useBoardStore, useGameStore } from "~/state";
+import { useBoardStore, useGameStore, gameActions } from "~/state";
 
 const Board = () => {
-	const { board } = useBoardStore((state) => state);
-	const { game, handleMove } = useGameStore((state) => state);
+	const board = useBoardStore((s) => s.board);
+	const game = useGameStore((s) => s.game);
 
 	const handleOpenCell = (
 		ev: React.MouseEvent<HTMLSpanElement, MouseEvent>,
 	) => {
 		const el = ev.currentTarget;
-		let { row, col } = el.dataset;
+		const { row, col } = el.dataset;
 		if (row === undefined || col === undefined) return;
-		handleMove(
+		gameActions.handleMove(
 			{ row: parseInt(row, 10), col: parseInt(col, 10), click: Click.Left },
 			board,
 		);
@@ -25,17 +25,17 @@ const Board = () => {
 	) => {
 		ev.preventDefault();
 		const el = ev.currentTarget;
-		let { row, col } = el.dataset;
+		const { row, col } = el.dataset;
 		if (row === undefined || col === undefined) return;
-		handleMove(
+		gameActions.handleMove(
 			{ row: parseInt(row), col: parseInt(col), click: Click.Right },
 			board,
 		);
 	};
 	return (
 		<main className="pb-4">
-			<div className="container px-2 mx-auto">
-				<div className="w-full overflow-auto flex flex-col gap-0.5">
+			<div className="overflow-x-scroll flex justify-center">
+				<div className="flex flex-col gap-0.5">
 					{board.map((row, i) => (
 						// rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<div key={i} className="flex gap-0.5">

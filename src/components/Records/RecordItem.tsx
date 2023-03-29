@@ -1,6 +1,8 @@
 import { FC } from "react";
 import dayjs from "dayjs";
 
+import { milliToSecs } from "~/utils/functions";
+
 import { Timer } from "~/icons";
 import { Record } from "~/types";
 
@@ -23,7 +25,7 @@ const RecordItem: FC<Props> = ({ record, place }) => {
 			</div>
 			<div className="text-lg font-medium">
 				<Timer className="w-5 h-5 inline-block mb-1 mr-1" />
-				{Math.round(record.duration / 1000)}.{record.duration % 1000}s
+				{milliToSecs(record.duration, 3)}s
 			</div>
 		</div>
 	);
