@@ -10,6 +10,7 @@ specifiers:
   '@vitejs/plugin-react-swc': ^3.0.0
   '@vitest/coverage-c8': ^0.29.7
   autoprefixer: ^10.4.14
+  dayjs: ^1.11.7
   jsdom: ^21.1.1
   postcss: ^8.4.21
   react: ^18.2.0
@@ -23,6 +24,7 @@ specifiers:
 
 dependencies:
   '@headlessui/react': 1.7.13_biqbaboplfbrettd7655fr4n2y
+  dayjs: 1.11.7
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   structurajs: 0.8.1
@@ -1014,6 +1016,10 @@ packages:
       whatwg-mimetype: 3.0.0
       whatwg-url: 12.0.1
     dev: true
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    dev: false
 
   /debug/4.3.4:
     resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
