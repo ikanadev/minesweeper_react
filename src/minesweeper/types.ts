@@ -32,8 +32,8 @@ export enum Cell {
 }
 
 export enum Status {
-	Win,
-	Lose,
-	Started,
-	Ready,
+	Win = "win",
+	Lose = "lose",
+	Started = "started",
+	Ready = "ready",
 }
