@@ -11,7 +11,7 @@ export async function saveRecord(
 	record: Omit<Record, "id">,
 	gameLevel: Exclude<GameLevel, GameLevel.Custom>,
 ): Promise<RecordsMap> {
-	const resp = await fetch(`${root}/records`, {
+	const resp = await fetch(`${root}/record`, {
 		method: "POST",
 		body: JSON.stringify({ record, gameLevel }),
 		headers: {
