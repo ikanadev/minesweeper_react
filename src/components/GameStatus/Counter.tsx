@@ -42,8 +42,7 @@ const Counter = () => {
 
 	useEffect(() => {
 		if (game.status === Status.Win || game.status === Status.Lose) {
-			console.log({ elapsed });
-			gameActions.setDuration(elapsed);
+			gameActions.setDuration(Math.round(elapsed));
 		}
 	}, [elapsed, game.status]);
 
