@@ -63,20 +63,19 @@ const NewRecordModal: FC<Props> = ({ open, onClose }) => {
 							<Dialog.Panel
 								className="
                 w-full max-w-md overflow-hidden rounded-md bg-neutral-100
-                p-4 text-left shadow-lg shadow-neutral-400
+								dark:bg-neutral-900
+                p-6 text-left shadow-lg shadow-neutral-400 dark:shadow-neutral-700
                 text-neutral-800 dark:text-neutral-100 mt-12
               "
 							>
 								<Dialog.Title
 									as="h3"
-									className="text-2xl font-medium leading-6 text-gray-900 font-heading"
+									className="text-2xl font-medium leading-6 font-heading"
 								>
 									{i18n.recordModal.title}
 								</Dialog.Title>
 								<div className="mt-2">
-									<p className="text-gray-800 mb-2">
-										{i18n.recordModal.description}
-									</p>
+									<p className="mb-2">{i18n.recordModal.description}</p>
 									<input
 										value={name}
 										onChange={(e) =>
@@ -99,6 +98,7 @@ const NewRecordModal: FC<Props> = ({ open, onClose }) => {
 										className="
                       rounded-md bg-neutral-200 px-3 py-1.5 text-sm focus:outline-none
                       focus-visible:ring-2 focus-visible:ring-neutral-500
+											dark:bg-neutral-800
                     "
 										onClick={onClose}
 									>
@@ -109,7 +109,7 @@ const NewRecordModal: FC<Props> = ({ open, onClose }) => {
 										className="
                       rounded-md bg-neutral-800 text-white shadow-sm px-3 py-1.5
                       focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400
-                      disabled:opacity-40
+                      disabled:opacity-50 disabled:dark:opacity-30 dark:bg-neutral-100 dark:text-black
                     "
 										disabled={name.trim().length === 0}
 										onClick={handleSaveRecord}
