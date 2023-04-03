@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Status } from "~/minesweeper/types";
 import {
 	useBoardStore,
@@ -27,20 +27,24 @@ const Record = () => {
 		[GameLevel.Expert]: i18n.level.expert,
 	};
 
-	const isNewRecord = () => {
+	const isNewRecord = useCallback(() => {
+		// duration 0 means the durations is not calculated yet
+		if (duration === 0) return false;
 		if (gameLevel === GameLevel.Custom) return false;
 		const records = recordsMap[gameLevel];
 		if (recordsMap[gameLevel].length < RECORDS_MAX_ITEMS) {
 			return true;
 		}
-		return records.some((record) => duration < record.duration);
-	};
+		return records.some((record) => {
+			return duration < record.duration;
+		});
+	}, [gameLevel, duration]);
 
 	useEffect(() => {
 		if (game.status === Status.Win) {
 			setShowModal(isNewRecord());
 		}
-	}, [game, board]);
+	}, [game, isNewRecord]);
 
 	useEffect(() => {
 		recordsActions.loadRecords();
