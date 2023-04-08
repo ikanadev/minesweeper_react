@@ -35,7 +35,10 @@ const Board = () => {
 	return (
 		<main className="pb-4">
 			<div className="overflow-x-scroll flex justify-center">
-				<div className="flex flex-col gap-0.5">
+				<div
+					className="flex flex-col gap-0.5"
+					onContextMenu={(e) => e.preventDefault()}
+				>
 					{board.map((row, i) => (
 						// rome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<div key={i} className="flex gap-0.5">
