@@ -38,4 +38,5 @@ export const spanishLabels: I18nLabels = {
 		saveButton: "Registar mi tiempo",
 		cancelButton: "No gracias",
 	},
+	close: "Cerrar",
 };

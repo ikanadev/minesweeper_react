@@ -38,4 +38,5 @@ export const englishLabels: I18nLabels = {
 		saveButton: "Save my record",
 		cancelButton: "No, thanks",
 	},
+	close: "Close",
 };

@@ -38,4 +38,5 @@ export type I18nLabels = {
 		saveButton: string;
 		cancelButton: string;
 	};
+	close: string;
 };
