@@ -36,8 +36,14 @@ function handleFlagCell(move: GameMove, game: Game) {
 
 function handleOpenCell(move: GameMove, game: Game, board: Board) {
 	const cellMapIndex: CellMapIndex = `${move.row}-${move.col}`;
-	// if opened or flagged, do nothing
-	if (game.openedMap[cellMapIndex] || game.flaggedMap[cellMapIndex]) {
+	// if flagged, do nothing
+	if (game.flaggedMap[cellMapIndex]) {
+		return;
+	}
+	if (game.openedMap[cellMapIndex]) {
+		// if opened but is blank, do nothing
+		if (board[move.row][move.col] === Cell.Blank) return;
+		handleChord(move.row, move.col, game, board);
 		return;
 	}
 	if (board[move.row][move.col] === Cell.Mine) {
@@ -51,6 +57,71 @@ function handleOpenCell(move: GameMove, game: Game, board: Board) {
 			newBlanks.push(...getNearbyBlanks(row, col, game, board));
 		});
 		nearByBlanks = newBlanks;
+	}
+	checkAndHandleGameWin(game, board);
+}
+
+function handleChord(row: number, col: number, game: Game, board: Board) {
+	const cell = board[row][col];
+	if (typeof cell !== "number") return;
+	let flagsCount = 0;
+	let validChord = true;
+	for (let i = row - 1; i <= row + 1; i++) {
+		for (let j = col - 1; j <= col + 1; j++) {
+			if (
+				i < 0 ||
+				j < 0 ||
+				i >= board.length ||
+				j >= board[0]?.length ||
+				(i === row && j === col)
+			) {
+				continue;
+			}
+			if (board[i][j] === Cell.Mine) {
+				if (!game.flaggedMap[`${i}-${j}`]) {
+					validChord = false;
+				}
+			}
+			if (game.flaggedMap[`${i}-${j}`]) {
+				flagsCount++;
+			}
+		}
+	}
+	// if flags is different from the number hint, do nothing
+	if (flagsCount !== cell) {
+		return;
+	}
+	if (!validChord) {
+		handleLose(game, board);
+		return;
+	}
+	let blanks: [number, number][] = [];
+	// handle chrod move
+	for (let i = row - 1; i <= row + 1; i++) {
+		for (let j = col - 1; j <= col + 1; j++) {
+			if (
+				i < 0 ||
+				j < 0 ||
+				i >= board.length ||
+				j >= board[0]?.length ||
+				(i === row && j === col)
+			) {
+				continue;
+			}
+			if (!game.openedMap[`${i}-${j}`] && !game.flaggedMap[`${i}-${j}`]) {
+				openCell(game, i, j);
+				if (board[i][j] === Cell.Blank) {
+					blanks.push([i, j]);
+				}
+			}
+		}
+	}
+	while (blanks.length > 0) {
+		const newBlanks: [number, number][] = [];
+		blanks.forEach(([row, col]) => {
+			newBlanks.push(...getNearbyBlanks(row, col, game, board));
+		});
+		blanks = newBlanks;
 	}
 	checkAndHandleGameWin(game, board);
 }
