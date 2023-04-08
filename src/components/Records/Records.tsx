@@ -1,24 +1,27 @@
 import { useEffect, useState, useCallback } from "react";
 import { Status } from "~/minesweeper/types";
+
 import {
-	useBoardStore,
 	useGameStore,
 	useRecordsStore,
 	useI18nStore,
 	recordsActions,
 } from "~/state";
-import { GameLevel } from "~/types";
+import { useBool } from "~/hooks";
+import { GameLevel, Record } from "~/types";
 import { RECORDS_MAX_ITEMS } from "~/utils/contants";
 import RecordItem from "./RecordItem";
 import NewRecordModal from "./NewRecordModal";
+import ShowRecordModal from "./ShowRecordModal";
 
 const Record = () => {
-	const [showModal, setShowModal] = useState(false);
+	const newRecordModal = useBool();
 	const { game, duration, gameLevel } = useGameStore();
 	const recordsMap = useRecordsStore((s) => s.recordsMap);
 	const i18n = useI18nStore((s) => s.i18n);
+	const [selectedRecord, setSelectedRecord] = useState<null | Record>(null);
 
-	const toggleModal = () => setShowModal((prev) => !prev);
+	const clearSelectedRecord = () => setSelectedRecord(null);
 
 	const levelMap = {
 		[GameLevel.Easy]: i18n.level.easy,
@@ -41,7 +44,7 @@ const Record = () => {
 
 	useEffect(() => {
 		if (game.status === Status.Win) {
-			setShowModal(isNewRecord());
+			newRecordModal.setIsActive(isNewRecord());
 		}
 	}, [game, isNewRecord]);
 
@@ -51,7 +54,11 @@ const Record = () => {
 
 	return (
 		<section className="pb-4 text-neutral-800 dark:text-neutral-100">
-			<NewRecordModal open={showModal} onClose={toggleModal} />
+			<NewRecordModal
+				open={newRecordModal.isActive}
+				onClose={newRecordModal.toggle}
+			/>
+			<ShowRecordModal record={selectedRecord} onClose={clearSelectedRecord} />
 			<div className="container px-2 py-3 mx-auto">
 				<h2 className="text-2xl font-heading mb-2 text-center">
 					{i18n.bestRecords}
@@ -68,7 +75,12 @@ const Record = () => {
 								{levelMap[key]}
 							</h3>
 							{recordsMap[key].map((record, idx) => (
-								<RecordItem key={record.id} record={record} place={idx + 1} />
+								<RecordItem
+									key={record.id}
+									record={record}
+									place={idx + 1}
+									selectRecord={setSelectedRecord}
+								/>
 							))}
 							{recordsMap[key].length === 0 && (
 								<p className="text-neutral-500 dark:text-neutral-400 italic text-sm">

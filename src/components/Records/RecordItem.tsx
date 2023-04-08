@@ -9,8 +9,9 @@ import { Record } from "~/types";
 type Props = {
 	record: Record;
 	place: number;
+	selectRecord: (record: Record) => void;
 };
-const RecordItem: FC<Props> = ({ record, place }) => {
+const RecordItem: FC<Props> = ({ record, place, selectRecord }) => {
 	return (
 		<div
 			key={record.id}
@@ -34,6 +35,7 @@ const RecordItem: FC<Props> = ({ record, place }) => {
 			</div>
 			<button
 				type="button"
+				onClick={() => selectRecord(record)}
 				className="
 					ml-2 border border-neutral-300 rounded shadow-sm text-neutral-500
 					cursor-pointer dark:text-neutral-300 dark:border-neutral-500
