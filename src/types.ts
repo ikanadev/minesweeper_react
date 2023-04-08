@@ -21,3 +21,10 @@ export type RecordsMap = {
 	[GameLevel.Medium]: Record[];
 	[GameLevel.Expert]: Record[];
 };
+
+export type CountsMap = {
+	total_attempts: number;
+	solved_boards: number;
+};
+
+export type CountType = keyof CountsMap;

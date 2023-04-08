@@ -16,7 +16,7 @@ const Heading = () => {
 
 	return (
 		<header>
-			<div className="max-w-lg px-2 py-3 mx-auto flex items-center text-neutral-800 dark:text-neutral-100">
+			<div className="max-w-lg px-2 pt-3 mx-auto flex items-center text-neutral-800 dark:text-neutral-100">
 				<span className="mb-2 mr-2">
 					<Mine width="28px" height="28px" />
 				</span>
