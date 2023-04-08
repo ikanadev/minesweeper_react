@@ -2,6 +2,7 @@ import { Flag, Mine } from "~/icons";
 import Counter from "./Counter";
 import { useGameStore, useI18nStore, gameActions } from "~/state";
 import { Status } from "~/minesweeper/types";
+import { Button } from "~/components";
 
 const GameStatus = () => {
 	const game = useGameStore((s) => s.game);
@@ -26,9 +27,9 @@ const GameStatus = () => {
 				</h2>
 				<div className="h-7 font-medium">
 					{game.status !== Status.Ready && (
-						<button type="button" onClick={restartGame} className="underline">
+						<Button small onClick={restartGame}>
 							{i18n.restartGame}
-						</button>
+						</Button>
 					)}
 				</div>
 

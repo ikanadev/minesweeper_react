@@ -2,6 +2,7 @@ import { FC, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { Record } from "~/types";
 import { Timer } from "~/icons";
+import { Button } from "~/components";
 import ClosedCell from "~/components/Board/ClosedCell";
 import OpenedCell from "~/components/Board/OpenedCell";
 
@@ -89,17 +90,9 @@ const ShowRecordModal: FC<Props> = ({ record, onClose }) => {
 											</div>
 										</div>
 										<div className="mt-2 flex justify-end">
-											<button
-												type="button"
-												className="
-                      rounded-md bg-neutral-200 px-3 py-1.5 text-sm focus:outline-none
-                      focus-visible:ring-2 focus-visible:ring-neutral-500
-											dark:bg-neutral-800 font-medium
-                    "
-												onClick={onClose}
-											>
+											<Button type="button" onClick={onClose} small>
 												{i18n.close}
-											</button>
+											</Button>
 										</div>
 									</>
 								)}

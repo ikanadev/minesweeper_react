@@ -1,6 +1,8 @@
 import { FC, Fragment, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
+import { Button } from "~/components";
+
 import {
 	recordsActions,
 	useBoardStore,
@@ -92,30 +94,18 @@ const NewRecordModal: FC<Props> = ({ open, onClose }) => {
 									</p>
 								</div>
 
-								<div className="mt-4 flex justify-end gap-4 font-semibold">
-									<button
-										type="button"
-										className="
-                      rounded-md bg-neutral-200 px-3 py-1.5 text-sm focus:outline-none
-                      focus-visible:ring-2 focus-visible:ring-neutral-500
-											dark:bg-neutral-800
-                    "
-										onClick={onClose}
-									>
+								<div className="mt-4 flex justify-end gap-4">
+									<Button type="button" onClick={onClose}>
 										{i18n.recordModal.cancelButton}
-									</button>
-									<button
+									</Button>
+									<Button
+										primary
 										type="button"
-										className="
-                      rounded-md bg-neutral-800 text-white shadow-sm px-3 py-1.5
-                      focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400
-                      disabled:opacity-50 disabled:dark:opacity-30 dark:bg-neutral-100 dark:text-black
-                    "
-										disabled={name.trim().length === 0}
 										onClick={handleSaveRecord}
+										disabled={name.trim().length === 0}
 									>
 										{i18n.recordModal.saveButton}
-									</button>
+									</Button>
 								</div>
 							</Dialog.Panel>
 						</Transition.Child>
